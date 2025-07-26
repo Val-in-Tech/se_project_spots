@@ -12,7 +12,8 @@ Functionality it provides:
 
 Technology and Techniques Used:
  Media Queries- Used to apply different CSS styles based on screen size.
- Flexbox Layout Control- flex-direction property to switch between row and column layouts - Essential for transforming desktop horizontal layouts into mobile vertical layouts.
+ Flexbox Layout Control- flex-direction property to switch between row and column layouts.
+ - Essential for transforming desktop horizontal layouts into mobile vertical layouts.
   
 Overview  
 
