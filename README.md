@@ -1,6 +1,6 @@
-# Project 3: Spots
+Project 3: Spots
 
-### Overview  
+Overview  
 
 * Intro  
 * Figma  
