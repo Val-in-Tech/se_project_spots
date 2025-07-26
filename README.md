@@ -16,7 +16,8 @@ This project is made so all the elements are displayed correctly on popular scre
   
 **Images Used in project!!
 
-<img width="23" height="20" alt="image" src="https://github.com/user-attachments/assets/34f7b10d-1ffc-42f3-b704-a1f63ccc8bc2" />
+<img width="23" height="20" alt="image" src="https://github.com/user-attachments/assets/34f7b10d-1ffc-42f3-b704-a1f63ccc8bc2" /> <img width="190" height="190" alt="image" src="https://github.com/user-attachments/assets/925409ad-9303-43b8-a116-88689b014844" />
+
 
 
   
