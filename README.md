@@ -1,5 +1,22 @@
 Project 3: Spots
 
+Project Description:
+- A responsive photo-sharing website called "Spots".
+- A social media platform where users can share and view photos.
+
+Functionality it provides:
+- Users can view a collection of photo cards.
+- Each card shows an image with a caption.
+- Users can see profile information.
+- The site works on both desktop and mobile devices.
+
+Technology and Techniques Used:
+ Media Queries:
+- Used to apply different CSS styles based on screen size.
+ Flexbox Layout Control:
+- flex-direction property to switch between row and column layouts.
+- Essential for transforming desktop horizontal layouts into mobile vertical layouts.
+  
 Overview  
 
 * Intro  
