@@ -53,6 +53,8 @@
   color: #212121;
   border: hidden;
   white-space: nowrap;
+  bottom: 20px;
+  position: relative;
 }
 
 .profile__add-btn {
@@ -114,10 +116,12 @@
   }
 
   .profile__edit-btn {
-    margin: 0;
-    width: 100%;
+    margin: 20px;
+    width: 107px;
     display: flex;
     justify-content: space-evenly;
+    border: 90px;
+    flex-flow: horizontal;
   }
 
   .profile__add-btn {
