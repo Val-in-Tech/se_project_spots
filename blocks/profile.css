@@ -7,6 +7,7 @@
 
 .profile__avatar {
   margin-right: 20px;
+  border-radius: 8px;
 }
 
 .profile__column {
@@ -32,6 +33,7 @@
   margin: 0;
   font-family: Poppins, Arial, Helvetica, sans-serif;
   color: #212121;
+  opacity: 70%;
   display: -webkit-box;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -43,7 +45,6 @@
 .profile__edit-btn {
   margin-top: auto;
   width: 84px;
-  height: 16px;
   font-family: Poppins, Arial, Helvetica, sans-serif;
   font-weight: 500;
   font-style: medium;
@@ -51,6 +52,7 @@
   line-height: 100%;
   background-color: #fcf5e5;
   color: #212121;
+  opacity: 70%;
   border: hidden;
   white-space: nowrap;
   bottom: 20px;
@@ -58,7 +60,7 @@
 }
 
 .profile__add-btn {
-  margin-left: auto;
+  margin-left: 10px;
   width: 149px;
   height: 52px;
   font-family: Poppins, Arial, Helvetica, sans-serif;
@@ -68,7 +70,7 @@
   line-height: 100%;
   background-color: #212121;
   color: #fcf5e5;
-  border-radius: 8px;
+  border-radius: 2px;
   gap: 8px;
   display: flex;
   align-items: center;
@@ -129,6 +131,6 @@
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
+
   }
 }

@@ -3,6 +3,7 @@
   width: 100%;
   object-fit: cover;
   display: block;
+  border-radius: 8px;
 }
 
 .card__content {
@@ -17,6 +18,7 @@
   font-style: medium;
   font-size: 20px;
   line-height: 120%;
+  flex-shrink: initial;
 }
 
 .card__like-btn {
@@ -26,10 +28,15 @@
   border: none;
   background-color: transparent;
   opacity: 40%;
+  flex-shrink: 0;
 }
 
 @media screen and (max-width: 627px) {
   .card__image {
-    height: 413px;
+    width: 288px;
+    height: 288px;
+  }
+  .card__title {
+    font-size: 16px;
   }
 }
