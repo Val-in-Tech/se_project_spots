@@ -15,7 +15,7 @@
 .card__title {
   color: #212121;
   font-weight: 500;
-  font-style: medium;
+  font-style: normal;
   font-size: 20px;
   line-height: 120%;
   flex-shrink: initial;
