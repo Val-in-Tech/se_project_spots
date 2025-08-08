@@ -10,7 +10,7 @@
   justify-content: center;
   align-items: center;
   padding: 10px;
-  font-family: Poppins, Arial, Helvetica, sans-serif;
+  font-family: "Poppins", Arial, Helvetica, sans-serifs;
  }
 
 .modal_is-opened {
@@ -29,9 +29,9 @@
 
 .modal__close-btn {
   position: absolute;
-  top: 40px;
-  right: 30px;
-  width: 30px;
+  top: 32px;
+  right: 50px;
+  width: 40px;
   height: 40px;
   background: url(../images/Group\ 27.svg);
   border: 2px;
@@ -40,7 +40,7 @@
 }
 
 .modal__title {
-  margin: 0px -10px 32px;
+  margin: 0 0 32px;
   width: 169px;
   font-size: 32px;
   font-weight: 500;
@@ -57,9 +57,9 @@
 .modal__label {
   margin: 0 0 32px;
   color: #212121B2;
-  opacity: 70%;
   font-size: 16px;
   font-weight: 500;
+  font-family: "Poppins", Arial, Helvetica, sans-serif;
 }
 
 .modal__input {
@@ -67,16 +67,17 @@
   margin: 8px 0 0;
   width: 100%;
   font-size: 20px;
-  border: 1px solid #212121;
-  opacity: 40%;
-  color: rgba(33, 33, 33, 0.3);
+  border: 1px solid #21212140;
   border-radius: 8px;
+  gap: 10px;
   padding: 16px 12px;
   max-width: 700px;
+  font-family: "Poppins", Arial, Helvetica, sans-serif;
 }
 
 .modal__input::placeholder {
   color: #2121214d;
+  font-size: 20px;
 }
 
 .modal__submit-btn {
@@ -84,33 +85,24 @@
   height: 52px;
   border-radius: 8px;
   padding: 18px 32px;
+  gap: 8px;
   background-color: #212121;
   color: #fCF5E5;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 16px;
-  font-weight: 500;
+  font-family: "Poppins", Arial, Helvetica, sans-serif;
 }
 
 @media screen and (max-width: 627px) {
   .modal__container{
     width: 300px;
-    padding: 30px;
-  }
-
-  .modal__close-btn {
-     display: flex;
+    padding: auto;
+    gap: 24px;
   }
 
   .modal__title {
     font-size: 20px;
-    margin-top: 15px;
-  }
-
-  .modal__form {
-   width: 300px;
-   align-items: center;
   }
 
   .modal__label {
@@ -119,12 +111,13 @@
 
   .modal__input {
    font-size: 16px;
-   width: 300px;
+   display: flex;
+   justify-content: space-between;
+   width: 276px;
  }
 
   .modal__submit-btn {
     font-size: 16px;
-    max-width: 300px;
-    width: 300px;
+    max-width: none;
  }
 }
