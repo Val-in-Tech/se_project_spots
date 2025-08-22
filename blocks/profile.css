@@ -59,7 +59,11 @@
   white-space: nowrap;
   bottom: 0;
   position: relative;
+}
 
+.profile__edit-btn:hover {
+  opacity: 1;
+  cursor: pointer;
 }
 
 .profile__add-btn {
@@ -80,6 +84,13 @@
   position: absolute;
   bottom: 10px;
   right: 0;
+}
+
+.profile__add-btn:hover {
+  opacity: 1;
+  background-color: #212121;
+  opacity: 80%;
+  cursor: pointer;
 }
 
 .profile__add-btn img {
