@@ -44,20 +44,21 @@
   border: 2px;
 }
 
+.modal__close-btn:hover {
+   opacity: 1;
+   cursor: pointer;
+}
+
 .modal__close_type_preview {
   background-image: url(../images/whitecloseicon.svg);
   top: 0;
   right: -52.5px;
 }
 
-.modal__close-btn:hover {
-   opacity: 1;
-   cursor: pointer;
-}
-
 .modal__close_type_preview:hover {
-  opacity: 1;
+  opacity: 40%;
   background-image: url(../images/close-hover.svg);
+
 }
 
 .modal__title {
