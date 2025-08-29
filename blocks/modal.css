@@ -12,7 +12,7 @@
   justify-content: center;
   align-items: center;
   padding: 0 10px;
-  font-family: "Poppins", Arial, Helvetica, sans-serifs;
+  font-family: "Poppins", Arial, Helvetica, sans-serif;
  }
 
  .modal_type_preview {
@@ -20,6 +20,7 @@
  }
 
 .modal_is-opened {
+  display: flex;
   visibility: visible;
   opacity: 1;
 }
@@ -42,6 +43,7 @@
   height: 40px;
   background: url(../images/group.svg);
   border: 2px;
+  opacity: 40%;
 }
 
 .modal__close-btn:hover {
@@ -78,6 +80,8 @@
 
 .modal__label {
   margin: 0 0 32px;
+  margin-bottom: 32px;
+  display: block;
   color: #212121B2;
   font-size: 16px;
   font-weight: 500;
@@ -112,6 +116,18 @@
   cursor: pointer;
 }
 
+.modal__input_type_error {
+  border: 1px solid rgba(255, 0, 0, 0.6);
+}
+
+.modal__error {
+  display: block;
+  color: #ff0000;
+  opacity: 70%;
+  font-size: 16px;
+  margin-top: 8px;
+}
+
 .modal__submit-btn {
   max-width: 156px;
   height: 52px;
@@ -127,12 +143,16 @@
 }
 
 .modal__submit-btn:hover {
-  opacity: 1;
+  opacity: 80%;
   cursor: pointer;
 }
 
 .modal__image-container {
   position: relative;
+}
+
+.modal__submit-btn_disabled {
+  opacity: 50%;
 }
 
 .modal__image {
