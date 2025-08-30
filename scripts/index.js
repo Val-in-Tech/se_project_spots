@@ -94,37 +94,38 @@ function getCardElement(data) {
 
   return cardElement;
 }
-editProfileModal.querySelector(".modal__close-btn").addEventListener("click", function () {
-  closeModal(editProfileModal);
-});
+
 newPostModal.querySelector(".modal__close-btn").addEventListener("click", function () {
   closeModal(newPostModal);
 });
 
-function openModal(modal) {
-  modal.classList.add("modal_is-opened");
+function handleOverlayClick(event) {
+  if (event.target.classList.contains('modal')) {
+    closeModal(event.target);
+  }
 }
 
-function closeModal(modal) {
-  modal.classList.remove("modal_is-opened");
-}
-
-document.addEventListener('keydown', function(event) {
-  if (event.key === 'Escape') {
+function handleEscape(event) {
+  if (event.key === "Escape") {
     const openedModal = document.querySelector(".modal_is-opened");
     if (openedModal) {
       closeModal(openedModal);
     }
   }
-});
+}
 
-document.querySelectorAll('.modal').forEach(modal => {
-  modal.addEventListener('mousedown', function(event) {
-    if (event.target === modal) {
-      closeModal(modal);
-    }
-  });
-});
+function openModal(modal) {
+  modal.classList.add("modal_is-opened");
+  modal.addEventListener('mousedown', handleOverlayClick);
+  document.addEventListener('keydown', handleEscape);
+}
+
+function closeModal(modal) {
+  modal.classList.remove("modal_is-opened");
+  modal.removeEventListener('mousedown', handleOverlayClick);
+  document.removeEventListener('keydown', handleEscape);
+}
+
 
 editProfileBtn.addEventListener("click", function () {
   openModal(editProfileModal);
@@ -139,8 +140,6 @@ editProfileCloseBtn.addEventListener("click", function () {
 
 newPostBtn.addEventListener("click", function () {
   openModal(newPostModal);
-  newPostFormEl.reset();
-  resetValidation(newPostFormEl, config);
 });
 
 newPostCloseBtn.addEventListener("click", function () {
