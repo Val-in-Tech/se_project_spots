@@ -1,0 +1,23 @@
+.cards {
+  padding-top: 25px;
+  font-weight: 500;
+  font-style: medium;
+  font-size: 12px;
+  line-height: 120%;
+}
+
+.cards__list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 413px);
+  justify-content: center;
+  gap: 40px 20px;
+}
+
+@media screen and (max-width:627px) {
+  .cards__list {
+  grid-template-columns: repeat(auto-fit, 288px);
+  }
+}
