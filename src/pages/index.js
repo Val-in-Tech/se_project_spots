@@ -6,6 +6,8 @@ document.querySelector(".header__logo").src = logo;
 import avatarFallback from '../images/spots-images/valarie.jpg';
 
 
+
+
 import Api from "../scripts/Api.js";
 
 const initialCards = [
@@ -147,6 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let selectedCard;
     let selectedCardId;
 
+     // testing this for adding unsplash images
     // quick helper — only allow obvious direct image URLs (avoids page URLs)
     const isLikelyImageUrl = (url) => {
       if (!url || typeof url !== "string") return false;
@@ -155,7 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // helper: return a direct-image URL or the fallback
     const normalizeImageUrl = (link) => {
-      if (!link || typeof link !== "string") return avatarFallback;
+      if (!link || typeof link !== "string") return cardFallback;
       const trimmed = link.trim();
       if (/\.(jpe?g|png|gif|webp|svg)(\?.*)?$/i.test(trimmed)) return trimmed;
       const unsplashMatch = String(trimmed).match(/unsplash\.com\/photos\/([^\/?#]+)/i);
@@ -164,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const photoId = slug.split('-').pop();
         return `https://source.unsplash.com/${photoId}/1600x900`;
       }
-      return avatarFallback;
+      return cardFallback;
     };
 
     function getCardElement(data) {
@@ -187,9 +190,11 @@ document.addEventListener('DOMContentLoaded', () => {
         cardImageEl.classList.remove('card__image--error');
       });
 
-      cardImageEl.addEventListener('error', (e) => {
-        cardImageEl.src = avatarFallback;
-        cardImageEl.classList.add('card__image--error');
+      cardImageEl.addEventListener('error', () => {
+        if (!cardImageEl.classList.contains('card__image--error')) {
+          cardImageEl.src = cardFallback;
+          cardImageEl.classList.add('card__image--error');
+        }
       });
 
       cardTitleEl.textContent = data.name;
@@ -364,12 +369,11 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         const imageErrorEl = newPostFormEl.querySelector("#card-image-input-error");
-        if (!isLikelyImageUrl(cardData.link)) {
-          if (imageErrorEl) {
-            imageErrorEl.textContent = "Please provide a direct image URL (jpg, png, gif, webp, svg).";
-            imageErrorEl.classList.add(config.errorClass);
-          }
-          if (submitBtn) setButtonText(submitBtn, false, "Save", "Saving...");
+        const isUnsplashPageUrl = (url) =>
+          typeof url === "string" && /unsplash\.com\/photos\/([^\/?#]+)/i.test(url);
+
+        if (!isLikelyImageUrl(cardData.link) && !isUnsplashPageUrl(cardData.link)) {
+          // Show error
           return;
         } else if (imageErrorEl) {
           imageErrorEl.textContent = "";
