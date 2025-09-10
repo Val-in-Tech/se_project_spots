@@ -4,6 +4,7 @@ import './index.css';
 import logo from '../images/logo.svg';
 document.querySelector(".header__logo").src = logo;
 import avatarFallback from '../images/spots-images/valarie.jpg';
+import cardFallback from '../images/spots-images/card-fallback.jpg';
 
 
 
