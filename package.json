@@ -4,8 +4,8 @@
   "description": "Project 3: Spots",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --mode production",
-    "dev": "webpack serve --mode development"
+    "start": "webpack serve --mode development --port 3000",
+    "build": "webpack --mode production"
   },
   "repository": {
     "type": "git",
