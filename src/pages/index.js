@@ -25,6 +25,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const profileDescriptionEl = document.querySelector(".profile__description");
   const avatarEl = document.querySelector('.profile__avatar');
 
+  avatarEl.addEventListener('error', (ev) => {
+    console.debug("avatar image load error for src:", avatarEl.src, ev);
+    avatarEl.classList.add('profile__avatar--error');
+  });
+
   const editProfileBtn = document.querySelector(".profile__edit-btn");
   const editProfileModal = document.querySelector("#edit-profile-modal");
   const editProfileCloseBtn = editProfileModal?.querySelector(".modal__close-btn") || null;
@@ -411,7 +416,7 @@ if (editAvatarFormEl) editAvatarFormEl.addEventListener("submit", handleAvatarSu
         console.log("API cards:", cards); // <--- What does this output?
         myUserId = userInfo._id;
         const isImageUrl = url => /\.(jpe?g|png|gif|webp|svg)$/i.test(url || "");
-        avatarEl.src = isImageUrl(userInfo.avatar) ? userInfo.avatar : avatarFallback;
+        avatarEl.src = userInfo.avatar || "";
         profileNameEl.textContent = userInfo.name;
         profileDescriptionEl.textContent = userInfo.about;
 
@@ -499,3 +504,4 @@ if (editAvatarFormEl) editAvatarFormEl.addEventListener("submit", handleAvatarSu
       console.error("edit profile form element not found (#edit-profile-form).");
     }
   });
+
