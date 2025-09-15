@@ -8,7 +8,7 @@ class Api {
     return Promise.all([this.getInitialCards(), this.getUserInfo()]);
   }
 
-  getInitialCards() {
+ getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers,
     }).then((res) => {
@@ -100,7 +100,6 @@ class Api {
       return Promise.reject(`Error: ${res.status}`);
     });
   }
-
 
   changeLikeStatus(id, isLiked) {
     return fetch(`${this._baseUrl}/cards/${id}/likes`, {

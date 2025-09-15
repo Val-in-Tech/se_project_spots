@@ -3,79 +3,26 @@ import { setButtonText } from "../utils/helpers.js";
 import './index.css';
 import logo from '../images/logo.svg';
 document.querySelector(".header__logo").src = logo;
-import avatarFallback from '../images/spots-images/valarie.jpg';
+import avatarFallback from '../images/spots-images/avatar.jpg';
 import cardFallback from '../images/spots-images/card-fallback.jpg';
-
-
 
 
 import Api from "../scripts/Api.js";
 
-const initialCards = [
-  {
-    _id: "init1",
-    name: "Golden Gate Bridge",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/7-photo-by-griffin-wooldridge-from-pexels.jpg",
-    likes: [{ _id: "demo-user" }]
-  },
-
-  {
-    _id: "init2",
-    name: "Val Thorens",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/1-photo-by-moritz-feldmann-from-pexels.jpg",
-    likes: []
-  },
-
-  {
-    _id: "init3",
-    name: "Restaurant terrace",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/2-photo-by-ceiline-from-pexels.jpg",
-    likes: []
-  },
-
-  {
-    _id: "init4",
-    name: "An outdoor cafe",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/3-photo-by-tubanur-dogan-from-pexels.jpg",
-    likes: []
-  },
-
-  {
-    _id: "init5",
-    name: "A very long bridge, over the forest and through the trees",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/4-photo-by-maurice-laschet-from-pexels.jpg",
-    likes: []
-  },
-
-  {
-    _id: "init6",
-    name: "Tunnel with morning light",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/5-photo-by-van-anh-nguyen-from-pexels.jpg",
-    likes: []
-  },
-
-  {
-    _id: "init7",
-    name: "Mountain house",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/6-photo-by-moritz-feldmann-from-pexels.jpg",
-    likes: []
-  },
-];
-
 const api = new Api({
   baseUrl: "https://around-api.en.tripleten-services.com/v1",
   headers: {
-    authorization: "dbc7ac93-a7e1-4202-a0be-543dc69048ed",
+    authorization: "314b9ca0-69a0-4cd4-9e45-d2ca9c95b937",
     "Content-Type": "application/json"
-  },
+  }
 });
 
 let myUserId;
-document.addEventListener('DOMContentLoaded', () => {
 
+document.addEventListener('DOMContentLoaded', () => {
+  const cardsList = document.querySelector(".cards__list");
   const profileNameEl = document.querySelector(".profile__name");
   const profileDescriptionEl = document.querySelector(".profile__description");
-  const cardsList = document.querySelector(".cards__list");
   const avatarEl = document.querySelector('.profile__avatar');
 
   const editProfileBtn = document.querySelector(".profile__edit-btn");
@@ -111,6 +58,32 @@ document.addEventListener('DOMContentLoaded', () => {
   const previewCaptionEl = previewModal.querySelector(".modal__caption");
   const previewModalImageContainer = previewModal.querySelector(".modal__image-container");
 
+  // shared helpers (keep this near top of DOMContentLoaded)
+  const isImageUrl = (url) => {
+    if (!url || typeof url !== "string") return false;
+    return /\.(jpe?g|png|gif|webp|svg)(\?.*)?$/i.test(url.trim());
+  };
+
+  // keep getImageUrl trivial (do NOT force local fallback)
+  function getImageUrl(link) {
+    return link || ""; // return raw link so UI shows the user's URL
+  }
+
+  // ADD preload helper so any user URL is attempted by the browser before rendering
+  function loadImageOnce(url, timeout = 6000) {
+    return new Promise((resolve) => {
+      if (!url || typeof url !== "string") return resolve(false);
+      const img = new Image();
+      let done = false;
+      const timer = setTimeout(() => {
+        if (!done) { done = true; img.src = ""; resolve(false); }
+      }, timeout);
+      img.onload = () => { if (!done) { done = true; clearTimeout(timer); resolve(true); } };
+      img.onerror = () => { if (!done) { done = true; clearTimeout(timer); resolve(false); } };
+      img.src = url;
+    });
+  }
+
     const avatarModalBtn = document.querySelector(".profile__avatar-btn");
     const editAvatarModal = document.querySelector("#edit-avatar-modal");
     const editAvatarCloseBtn = editAvatarModal.querySelector(".modal__close-btn");
@@ -140,8 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-
-    if (editAvatarFormEl) editAvatarFormEl.addEventListener("submit", handleAvatarSubmit);
+if (editAvatarFormEl) editAvatarFormEl.addEventListener("submit", handleAvatarSubmit);
 
     const deleteModal = document.querySelector("#delete-modal");
     const deleteCloseBtn = deleteModal.querySelector(".modal__close-btn");
@@ -149,27 +121,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let selectedCard;
     let selectedCardId;
-
-     // testing this for adding unsplash images
-    // quick helper — only allow obvious direct image URLs (avoids page URLs)
-    const isLikelyImageUrl = (url) => {
-      if (!url || typeof url !== "string") return false;
-      return /\.(jpe?g|png|gif|webp|svg)(\?.*)?$/i.test(url.trim());
-    };
-
-    // helper: return a direct-image URL or the fallback
-    const normalizeImageUrl = (link) => {
-      if (!link || typeof link !== "string") return cardFallback;
-      const trimmed = link.trim();
-      if (/\.(jpe?g|png|gif|webp|svg)(\?.*)?$/i.test(trimmed)) return trimmed;
-      const unsplashMatch = String(trimmed).match(/unsplash\.com\/photos\/([^\/?#]+)/i);
-      if (unsplashMatch) {
-        const slug = unsplashMatch[1];
-        const photoId = slug.split('-').pop();
-        return `https://source.unsplash.com/${photoId}/1600x900`;
-      }
-      return cardFallback;
-    };
 
     function getCardElement(data) {
       const cardTemplate = document
@@ -182,20 +133,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
       console.debug("Creating card:", data._id, data.name, data.link);
 
-
-      cardImageEl.src = normalizeImageUrl(data.link);
+      // Immediately assign the raw user link so the card shows the user-supplied URL
+      cardImageEl.src = data.link || "";
       cardImageEl.alt = data.name || "";
+      cardImageEl.classList.remove('card__image--loading');
 
-
-      cardImageEl.addEventListener('load', () => {
-        cardImageEl.classList.remove('card__image--error');
-      });
-
-      cardImageEl.addEventListener('error', () => {
-        if (!cardImageEl.classList.contains('card__image--error')) {
-          cardImageEl.src = cardFallback;
-          cardImageEl.classList.add('card__image--error');
-        }
+      // Log failures but do NOT overwrite the user's URL (avoid forcing fallback)
+      cardImageEl.addEventListener('error', (ev) => {
+        console.debug("image load error for src:", cardImageEl.src, ev);
+        cardImageEl.classList.add('card__image--error'); // visual marker if desired
       });
 
       cardTitleEl.textContent = data.name;
@@ -256,8 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       cardImageEl.addEventListener("click", () => {
-        // use normalized URL for the preview too
-        previewImageEl.src = normalizeImageUrl(data.link);
+        previewImageEl.src = getImageUrl(data.link);
         previewCaptionEl.textContent = data.name;
         openModal(previewModal);
       });
@@ -358,44 +303,63 @@ document.addEventListener('DOMContentLoaded', () => {
     if (newPostCloseBtn) newPostCloseBtn.addEventListener("click", () => closeModal(newPostModal));
     if (previewModalCloseBtn) previewModalCloseBtn.addEventListener("click", () => closeModal(previewModal));
     if (newPostFormEl) {
-      newPostFormEl.addEventListener("submit", function (evt) {
+      newPostFormEl.addEventListener("submit", async function (evt) {
         evt.preventDefault();
-
         const submitBtn = newPostFormEl.querySelector(".modal__submit-btn");
         if (submitBtn) setButtonText(submitBtn, true, "Save", "Saving...");
 
+        const inputLink = (newPostCardImageInput.value || "").trim();
+        const caption = newPostCardCaptionInput.value || "";
+
         const cardData = {
-          name: newPostCardCaptionInput.value,
-          link: newPostCardImageInput.value,
+          name: caption,
+          link: inputLink, // send original user input to server
         };
 
-        const imageErrorEl = newPostFormEl.querySelector("#card-image-input-error");
-        const isUnsplashPageUrl = (url) =>
-          typeof url === "string" && /unsplash\.com\/photos\/([^\/?#]+)/i.test(url);
+        // render immediately with the raw link so user sees the card at once
+        const tempCard = {
+          _id: `init-${Date.now()}`,
+          name: cardData.name,
+          link: inputLink, // raw user URL
+          likes: []
+        };
+        const cardElement = getCardElement(tempCard);
+        cardsList.prepend(cardElement);
+        closeModal(newPostModal);
+        newPostFormEl.reset();
+        resetValidation(newPostFormEl, config);
 
-        if (!isLikelyImageUrl(cardData.link) && !isUnsplashPageUrl(cardData.link)) {
-          // Show error
-          return;
-        } else if (imageErrorEl) {
-          imageErrorEl.textContent = "";
-          imageErrorEl.classList.remove(config.errorClass);
-        }
-
+        // then call the API; if the server returns a different link/update the DOM
         api.addCard(cardData)
           .then((newCard) => {
-            const cardElement = getCardElement(newCard);
-            cardsList.prepend(cardElement);
-            closeModal(newPostModal);
-            newPostFormEl.reset();
-            resetValidation(newPostFormEl, config);
+            try {
+              // if server created an id, update element dataset / remove init id etc.
+              const imgEl = cardElement.querySelector('.card__image');
+              const titleEl = cardElement.querySelector('.card__title');
+
+              if (newCard && newCard._id) {
+                // store real id if needed
+                cardElement.dataset.cardId = newCard._id;
+              }
+              // if server returned a link different from what user supplied, update image src
+              if (newCard && newCard.link && newCard.link !== inputLink) {
+                imgEl.src = newCard.link;
+              }
+              // update likes/title from server if available
+              if (newCard && typeof newCard.name === 'string') titleEl.textContent = newCard.name;
+            } catch (e) {
+              console.debug("Error applying server response to client card:", e);
+            }
           })
-          .catch(console.error)
+          .catch((err) => {
+            console.error("addCard API failed:", err);
+            // leave the client card as-is (raw URL) so user still sees their post
+          })
           .finally(() => {
             if (submitBtn) setButtonText(submitBtn, false, "Save", "Saving...");
           });
       });
     }
-
 
 
     function isProfileChanged() {
@@ -444,25 +408,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     api.getAppInfo()
       .then(([cards, userInfo]) => {
+        console.log("API cards:", cards); // <--- What does this output?
         myUserId = userInfo._id;
-
-        if (userInfo.avatar && /^https?:\/\/.+\.(jpg|jpeg|png|gif|webp)$/i.test(userInfo.avatar)) {
-          avatarEl.src = userInfo.avatar;
-        } else {
-          avatarEl.src = avatarFallback;
-        }
-
+        const isImageUrl = url => /\.(jpe?g|png|gif|webp|svg)$/i.test(url || "");
+        avatarEl.src = isImageUrl(userInfo.avatar) ? userInfo.avatar : avatarFallback;
         profileNameEl.textContent = userInfo.name;
         profileDescriptionEl.textContent = userInfo.about;
 
+        cardsList.innerHTML = "";
         cards.forEach((item) => {
           const cardElement = getCardElement(item);
+          console.log(cardElement);
           cardsList.append(cardElement);
-        });
-
-        initialCards.forEach((item) => {
-          const cardElement = getCardElement(item);
-          cardsList.append(cardElement);
+          console.log("Appending card:", cardElement);
         });
       })
       .catch(console.error);
@@ -537,7 +495,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (submitBtn) setButtonText(submitBtn, false, "Save", "Saving...");
       });
   });
-  } else {
-    console.error("edit profile form element not found (#edit-profile-form).");
-  }
-});
+    } else {
+      console.error("edit profile form element not found (#edit-profile-form).");
+    }
+  });

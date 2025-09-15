@@ -16,14 +16,14 @@
   <main class="content">
     <section class="profile page__section">
       <div class="profile__avatar-container">
-      <img class="profile__avatar" src="images/spots-images/valarie.jpg" alt="Profile avatar" />
+      <img class="profile__avatar" src="images/spots-images/avatar.jpg" alt="Profile avatar" />
       <button class="profile__avatar-btn" type="button">
         <img src="images/pencil-light.svg" alt="Edit avatar" />
       </button>
       </div>
       <div class="profile__column">
-        <h1 class="profile__name">Valarie A. Paiz</h1>
-        <p class="profile__description">Aspiring Software Engineer</p>
+        <h1 class="profile__name">Enter your name</h1>
+        <p class="profile__description">Enter profile description</p>
       <button type="button" class="profile__edit-btn">
         <img src="images/pencil.svg" alt="Pencil icon" />Edit Profile
       </button>
@@ -33,8 +33,17 @@
      </button>
     </section>
     <section class="cards">
-      <ul class="cards__list">
-    </ul>
+      <template id="card-template">
+  <li class="card">
+    <button class="card__delete-btn" type="button"></button>
+    <img src="#" alt="" class="card__image" />
+    <div class="card__content">
+      <h2 class="card__title"></h2>
+      <button aria-label="Like card" type="button" class="card__like-btn"></button>
+    </div>
+  </li>
+</template>
+<ul class="cards__list"></ul>
    </section>
     <template id="card-template">
           <li class="card">
@@ -155,6 +164,7 @@
           <input
           id="avatar-input"
           class="modal__input"
+          type="url"
           name="avatar"
           placeholder="Paste the link to an image"
           required

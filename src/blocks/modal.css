@@ -118,7 +118,7 @@
 .modal__submit-btn.modal__submit-btn_delete {
   width: 148px;
   height: 56px;
-  border-radius: 8px;
+  border: none;
   padding: 18px 32px;
   font-size: 16px;
   background-color: #ff3333;
@@ -136,8 +136,8 @@
   border-radius: 8px;
   padding: 18px 32px;
   font-size: 16px;
-  background-color: #212121;
-  color: #fCF5E5;
+  background-color: #fCF5E5;
+  color: #212121;
 }
 
 .modal__label {

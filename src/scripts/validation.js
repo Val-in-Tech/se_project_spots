@@ -38,7 +38,7 @@ const checkInputValidity = (formEl, inputEl, config) => {
 };
 
 function toggleButtonState(inputList, buttonEl, config) {
-  if (!buttonEl) return; // Prevent errors if button is missing
+  if (!buttonEl) return;
   if (hasInvalidInput(inputList)) {
     buttonEl.disabled = true;
     buttonEl.classList.add(config.inactiveButtonClass);
@@ -60,7 +60,6 @@ export function resetValidation(formEl, config) {
     hideInputError(formEl, inputEl, config);
   });
 
-  // Add a null check for submitButton
   if (submitButton) {
     if (inputList.some(input => !input.validity.valid)) {
       submitButton.disabled = true;
