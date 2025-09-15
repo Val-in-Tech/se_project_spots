@@ -159,13 +159,21 @@ if (editAvatarFormEl) editAvatarFormEl.addEventListener("submit", handleAvatarSu
         likesArr = getLocalLikes(data._id);
       }
 
-      if (
-        Array.isArray(likesArr) &&
-        likesArr.some(user => user._id === myUserId)
-      ) {
-        cardLikeBtnEl.classList.add("card__like-btn_active");
+      // For demo cards (local only)
+      if (data._id && data._id.startsWith("init")) {
+        const likesArr = getLocalLikes(data._id);
+        if (Array.isArray(likesArr) && likesArr.some(user => user._id === myUserId)) {
+          cardLikeBtnEl.classList.add("card__like-btn_active");
+        } else {
+          cardLikeBtnEl.classList.remove("card__like-btn_active");
+        }
       } else {
-        cardLikeBtnEl.classList.remove("card__like-btn_active");
+        // For real cards from the API
+        if (data.isLiked === true) {
+          cardLikeBtnEl.classList.add("card__like-btn_active");
+        } else {
+          cardLikeBtnEl.classList.remove("card__like-btn_active");
+        }
       }
 
       cardLikeBtnEl.addEventListener("click", () => {
@@ -187,14 +195,12 @@ if (editAvatarFormEl) editAvatarFormEl.addEventListener("submit", handleAvatarSu
         const isActive = cardLikeBtnEl.classList.contains("card__like-btn_active");
         api.changeLikeStatus(data._id, isActive)
           .then((updatedCard) => {
-            if (
-              Array.isArray(updatedCard.likes) &&
-              updatedCard.likes.some(user => user._id === myUserId)
-            ) {
-              cardLikeBtnEl.classList.add("card__like-btn_active");
-            } else {
-              cardLikeBtnEl.classList.remove("card__like-btn_active");
-            }
+            console.log("API like response:", updatedCard);
+            if (updatedCard.isLiked === true) {
+  cardLikeBtnEl.classList.add("card__like-btn_active");
+} else {
+  cardLikeBtnEl.classList.remove("card__like-btn_active");
+}
           })
           .catch(console.error);
       });

@@ -277,7 +277,14 @@
     right: 0;
   }
 
-  .modal_image {
+  .modal__delete-container {
+    width: 300px;
+    padding: 16px 8px;
+    gap: 16px;
+    max-width: 100%;
+  }
+
+  .modal__image {
     max-width: unset;
   }
 }
