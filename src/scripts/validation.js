@@ -9,16 +9,20 @@ export const config = {
 
 const showInputError = (formEl, inputEl, errorMessage, config) => {
   const errorMessageEl = formEl.querySelector(`#${inputEl.id}-error`);
-  errorMessageEl.textContent = errorMessage;
+  if (errorMessageEl) {
+    errorMessageEl.textContent = errorMessage;
+    errorMessageEl.classList.add(config.errorClass);
+  }
   inputEl.classList.add(config.inputErrorClass);
-  errorMessageEl.classList.add(config.errorClass);
 };
 
 const hideInputError = (formEl, inputEl, config) => {
   const errorMessageEl = formEl.querySelector(`#${inputEl.id}-error`);
-  errorMessageEl.textContent = "";
+  if (errorMessageEl) {
+    errorMessageEl.textContent = "";
+    errorMessageEl.classList.remove(config.errorClass);
+  }
   inputEl.classList.remove(config.inputErrorClass);
-  errorMessageEl.classList.remove(config.errorClass);
 };
 
 const checkInputValidity = (formEl, inputEl, config) => {
@@ -34,6 +38,7 @@ const checkInputValidity = (formEl, inputEl, config) => {
 };
 
 function toggleButtonState(inputList, buttonEl, config) {
+  if (!buttonEl) return;
   if (hasInvalidInput(inputList)) {
     buttonEl.disabled = true;
     buttonEl.classList.add(config.inactiveButtonClass);
@@ -55,12 +60,16 @@ export function resetValidation(formEl, config) {
     hideInputError(formEl, inputEl, config);
   });
 
-  if (inputList.some(input => !input.validity.valid)) {
-    submitButton.disabled = true;
-    submitButton.classList.add(config.inactiveButtonClass);
+  if (submitButton) {
+    if (inputList.some(input => !input.validity.valid)) {
+      submitButton.disabled = true;
+      submitButton.classList.add(config.inactiveButtonClass);
+    } else {
+      submitButton.disabled = false;
+      submitButton.classList.remove(config.inactiveButtonClass);
+    }
   } else {
-    submitButton.disabled = false;
-    submitButton.classList.remove(config.inactiveButtonClass);
+    console.error("Submit button not found with selector:", config.submitButtonSelector);
   }
 };
 
@@ -83,8 +92,7 @@ export const enableValidation = (config) => {
   const formList = Array.from(document.querySelectorAll(config.formSelector));
   formList.forEach((formEl) => {
     setEventListeners(formEl, config);
-    formEl.reset();
-  resetValidation(formEl, config);
-    });
-  };
+    resetValidation(formEl, config);
+  });
+};
 
